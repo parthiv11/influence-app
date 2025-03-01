@@ -44,6 +44,9 @@ dependencies:
   fluttertoast: ^8.2.12
   path: ^1.9.0
   
+  # Animation packages
+  lottie: ^3.1.0
+  
   # Social sign-in packages
   google_sign_in: ^6.2.1
   flutter_facebook_auth: ^6.0.4

@@ -2,6 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/discover_screen.dart';
+import 'screens/profile_screen.dart';
+import 'screens/chat_screen.dart';
+import 'screens/main_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'services/firestore_service.dart';
@@ -162,10 +167,11 @@ class MyApp extends StatelessWidget {
             secondary: Color(0xFFE91916), // Twitch red
             tertiary: Color(0xFF1F69FF), // Twitch blue
             surface: Color(0xFF18181B),
-            background: Color(0xFF0E0E10),
+            background: Color(0xFF18181B), // Updated to match surface color
             onPrimary: Colors.white,
             onSecondary: Colors.white,
             onSurface: Colors.white,
+            onBackground: Colors.white, // Added to match onSurface
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
@@ -202,7 +208,15 @@ class MyApp extends StatelessWidget {
             hintStyle: const TextStyle(color: Colors.grey),
           ),
         ),
-        home: const SplashScreen(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const SplashScreen(),
+          '/main': (context) => const MainScreen(),
+          '/home': (context) => const HomeScreen(),
+          '/discover': (context) => const DiscoverScreen(),
+          '/profile': (context) => const ProfileScreen(),
+          '/chat': (context) => const ChatScreen(),
+        },
       ),
     );
   }

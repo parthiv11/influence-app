@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
 import 'login_screen.dart';
-import 'profile_screen.dart';
+import 'main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -45,11 +45,8 @@ class _SplashScreenState extends State<SplashScreen>
         final authService = Provider.of<AuthService>(context, listen: false);
         await authService.ensureUserProfileExists();
 
-        print('DEBUG: SplashScreen - navigating to ProfileScreen');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ProfileScreen()),
-        );
+        print('DEBUG: SplashScreen - navigating to MainScreen');
+        Navigator.pushReplacementNamed(context, '/main');
       } else {
         print(
           'DEBUG: SplashScreen - user is not logged in, navigating to LoginScreen',
@@ -76,15 +73,68 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.deepPurpleAccent],
+            colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.primary.withOpacity(0.7),
+              Theme.of(context).colorScheme.tertiary,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Center(
-          child: ScaleTransition(
-            scale: _animation,
-            child: Icon(Icons.star, size: 120, color: Colors.white),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Logo animation
+              ScaleTransition(
+                scale: _animation,
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.star,
+                    size: 80,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
+              // App name with fade-in animation
+              FadeTransition(
+                opacity: _animation,
+                child: const Text(
+                  'Influence',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Tagline with fade-in animation
+              FadeTransition(
+                opacity: _animation,
+                child: const Text(
+                  'Connect with creators who match your brand',
+                  style: TextStyle(fontSize: 16, color: Colors.white70),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
         ),
       ),
